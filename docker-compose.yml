@@ -14,6 +14,14 @@ services:
       - 3001:3001
     env_file:
       - .env
+    depends_on:
+      - DB
+    healthcheck:
+      test: ["executable", "arg"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
 
   DB:
     container_name: crud-db
