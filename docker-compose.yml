@@ -2,7 +2,7 @@
 version: '3'
 
 services:
-  API:
+  api:
     build: .
     container_name: crud-api
     tty: true
@@ -15,18 +15,33 @@ services:
     env_file:
       - .env
     depends_on:
-      - DB
+      db:
+        condition: service_healthy
+    networks:
+      - db-network
     healthcheck:
-      test: ["executable", "arg"]
+      test: ["CMD", "lsof", "-t", "-i:3001"]
       interval: 1m30s
       timeout: 30s
       retries: 5
       start_period: 30s
 
-  DB:
+  db:
     container_name: crud-db
     ports:
       - 3306:3306
     image: mysql:8.0.32
-    env_file:
-      - .env
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    restart: 'always'
+    networks:
+      - db-network
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"] # Deve aguardar o banco ficar operacional
+      timeout: 10s
+      retries: 5
+    cap_add:
+      - SYS_NICE
+networks:
+  db-network:
+    driver: bridge
