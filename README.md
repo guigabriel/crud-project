@@ -58,25 +58,24 @@ Antes de executar este projeto, certifique-se de ter instalado o seguinte:
 
 
 1. Utilize o comando `pwd` e verifique que você está dentro da pasta do projeto.
-
-
-2. Utilize o comando `docker-compose up -d --build` para criar os contâiners.
- 
- 
-3. Após os containers subirem você deve entrar no container `crud-api` assim:
+2. Crie um arquivo `.env` na Raiz do Projeto:
+   ```bash
+   MYSQL_USER=root
+   MYSQL_PASSWORD=password
+   MYSQL_PORT=3306
+   MYSQL_HOST=db 
+   MYSQL_DB=crud_db
+   MYSQL_ROOT_PASSWORD=password
+   
+3. Utilize o comando `docker-compose up -d --build` para criar os contâiners.
+4. Após os containers subirem você deve entrar no container `crud-api` assim:
    - `docker exec -it crud-api sh`.
- 
- 
-4. Dentro do container você deve instalar as dependências do projeto:
+5. Dentro do container você deve instalar as dependências do projeto:
    - `npm install`.
- 
- 
-5. E por fim executar o projeto: 
+6. E por fim executar o projeto: 
    - `npm run dev`.
-
-
-6. Para sair do container é só digitar `exit`.
-7. Para derrubar os containers basta executar `docker-compose down`.
+7. Para sair do container é só digitar `exit`.
+9. Para derrubar os containers basta executar `docker-compose down`.
 
 
 <strong> ⚠️IMPORTANTE</strong>
@@ -84,6 +83,23 @@ Antes de executar este projeto, certifique-se de ter instalado o seguinte:
    - Após a primeira vez o comando será apenas `docker-compose up -d`.
 
 
+## Endpoits
+   - `POST /user/login`
+   ```bash
+         {
+            "email":"gui@gui.com",
+            "password": "senha12346789"
+         }
+   ```   
+   - `POST /user/logout`
+   - `POST /user/register`
+   ```bash
+           {
+               "email":"test@test.com",
+               "password":"senha123546",
+               "username":"user"
+           }
+```
 ## Tecnologias utilizadas.
 
 - `Node JS`
